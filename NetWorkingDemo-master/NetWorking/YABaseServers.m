@@ -9,12 +9,13 @@
 #import "YABaseServers.h"
 #import "ServerConfig.h"
 @interface YABaseServers()
+// 表示遵守协议的子类
 @property (nonatomic, weak) id<YABaseServiceProtocol> child;
 @property (nonatomic, strong) NSString *customApiBaseUrl;
 @end
 @implementation YABaseServers
 @synthesize privateKey = _privateKey,apiBaseUrl = _apiBaseUrl;
-
+// 如果不采用自动合成  就不会生成 带下划线的实例变量
 
 - (instancetype)init
 {

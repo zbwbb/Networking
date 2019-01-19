@@ -7,6 +7,7 @@
 //
 /**
  *  应用基本信息参数Model
+ *  只会初始化一次
  */
 #import <Foundation/Foundation.h>
 
@@ -25,6 +26,7 @@
 @property (nonatomic, copy, readonly) NSString *device_model;      //操作系统类型
 @property (nonatomic, copy, readonly) NSString *qtime;        //发送请求的时间
 @property (nonatomic, copy, readonly) NSString *device_id;
+// 网络是否可用
 @property (nonatomic, readonly) BOOL isReachable;
 
 

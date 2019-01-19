@@ -13,8 +13,10 @@
 @implementation YANetworkingAutoCancelRequests
 -(void)dealloc{
     [self.requestEngines enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, YABaseDataEngine * _Nonnull obj, BOOL * _Nonnull stop) {
+        // 每个dataengin 都有对应的 requestid
         [obj cancelRequest];
     }];
+    // 清楚所有的键值对
     [self.requestEngines removeAllObjects];
     self.requestEngines = nil;
 }
@@ -29,6 +31,7 @@
 - (void)setEngine:(YABaseDataEngine *)engine requestID:(NSNumber *)requestID
 {
     if (engine && requestID) {
+        // 一个数据引擎里面 可能会有很多次请求，用字典保存
         self.requestEngines[requestID] = engine;
     }
 }

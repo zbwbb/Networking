@@ -35,9 +35,13 @@ static NSTimeInterval kYANetworkingTimeoutSeconds = 20.0f;
 
 #pragma mark - public methods
 - (NSURLRequest *)generateWithRequestDataModel:(YAAPIBaseRequestDataModel *)dataModel{
+    // 获取服务器
     YABaseServers *service = [[YAServerFactory sharedInstance] serviceWithType:dataModel.serviceType];
+    // 获取参数
     NSMutableDictionary *commonParams = [NSMutableDictionary dictionaryWithDictionary:[YACommonParamsGenerator commonParamsDictionary]];
+    // 将外层参数和固定参数进行拼接
     [commonParams addEntriesFromDictionary:dataModel.parameters];
+    // 
     if (![NSString isEmptyString:service.privateKey]) {
         /**
          *  每个公司的签名方法不同，可以根据自己的设计进行修改，这里是将privateKey放在参数里面，然后将所有的参数和参数名转成字符串进行MD5，将得到的MD5值放进commonParams，上传的时候再讲privateKey从commonParams移除

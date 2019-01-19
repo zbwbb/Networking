@@ -74,6 +74,7 @@
             //可以在这里做错误的UI处理，或者是在上层engine做
             responseBlock(data,error);
         }
+        // 请求成功 将记录移除
         [weakControl.networkingAutoCancelRequests removeEngineWithRequestID:engine.requestID];
     }];
     [engine callRequestWithRequestModel:dataModel control:control];

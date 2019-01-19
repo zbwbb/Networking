@@ -40,9 +40,12 @@
  *  @return 网络请求task哈希值
  */
 - (NSNumber *)callRequestWithRequestModel:(YAAPIBaseRequestDataModel *)requestModel{
+    //
     NSURLRequest *request = [[YAAPIURLRequestGenerator sharedInstance] generateWithRequestDataModel:requestModel];
+    //
     typeof(self) __weak weakSelf = self;
     AFURLSessionManager *sessionManager = self.sessionManager;
+    
     NSURLSessionDataTask *task = [sessionManager
                                   dataTaskWithRequest:request
                                   uploadProgress:requestModel.uploadProgressBlock
@@ -51,9 +54,11 @@
                                                       id  _Nullable responseObject,
                                                       NSError * _Nullable error)
     {
+        // 如果在数据返回之前已经取消了请求，再次就不再进行数据的回调
         if (task.state == NSURLSessionTaskStateCanceling) {
             // 如果这个operation是被cancel的，那就不用处理回调了。
         } else {
+            // 做一步处理：这次请求是可以回调的，从存储列表中删除。
             NSNumber *requestID = [NSNumber numberWithUnsignedInteger:task.hash];
             [weakSelf.dispatchTable removeObjectForKey:requestID];
             
@@ -66,6 +71,7 @@
     }];
     [task resume];
     NSNumber *requestID = [NSNumber numberWithUnsignedInteger:task.hash];
+    // 将 任务 的 hash值 与 任务进行绑定
     [self.dispatchTable setObject:task forKey:requestID];
     return requestID;
 }
@@ -84,6 +90,7 @@
         NSURLSessionDataTask *task = [weakSelf.dispatchTable objectForKey:obj];
         [task cancel];
     }];
+    //  根据数组清楚
     [self.dispatchTable removeObjectsForKeys:requestIDList];
 }
 

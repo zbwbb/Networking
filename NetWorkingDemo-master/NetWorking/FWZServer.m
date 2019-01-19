@@ -9,6 +9,7 @@
 #import "FWZServer.h"
 
 @implementation FWZServer
+// 也可以理解为：为属性起了一个别名
 @synthesize developApiBaseUrl = _developApiBaseUrl,testApiBaseUrl = _testApiBaseUrl,prereleaseApiBaseUrl = _prereleaseApiBaseUrl,releaseApiBaseUrl = _releaseApiBaseUrl,hotfixApiBaseUrl = _hotfixApiBaseUrl;
 
 - (NSString *)developApiBaseUrl {

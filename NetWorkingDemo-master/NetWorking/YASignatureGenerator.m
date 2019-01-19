@@ -24,7 +24,7 @@
             inputString = [inputString stringByAppendingString:[NSString stringWithFormat:@"&%@=%@", [sortedValues objectAtIndex:i], [dict valueForKey:[sortedValues objectAtIndex:i]]]];
         }
     }
-    
+    // 将输入的参数拼接成完整的字符串 加密
     result = [self md5:inputString];
     
     return result;
